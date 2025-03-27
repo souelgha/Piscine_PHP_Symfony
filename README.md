@@ -1,2 +1,4 @@
 # Piscine_PHP_Symfony
-Discover php_Symfony language
+
+## Module 0: Initiation
+First step to discover HTMl, CSS, Javascript.
