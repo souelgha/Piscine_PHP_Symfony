@@ -4,6 +4,15 @@ $handle=file_get_contents("ex06-mod.txt");
 // echo $handle;
 $number=explode("\n", $handle);
 print_r($number);
+$element=explode("= ",$number[0] );
+print_r($element);
+
+
+// foreach($number as $value)
+// {
+//     $element[]
+// }
+
 
 
 // <table>
