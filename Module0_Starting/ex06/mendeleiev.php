@@ -1,49 +1,140 @@
 <?php
+
+$array_colors=[
+    [        
+        'group'=> [1],
+        'period' => [1],
+        'color' => 'rgb(142, 185, 235);'
+    ],
+    [
+        'group'=> [1],
+        'period' => [2,3,4,5,6,7],
+        'color' => 'rgb(158, 49, 63);'
+
+    ],
+    [
+        'group'=> [2],
+        'period' => [2,3,4,5,6,7],
+        'color' => 'rgb(235, 152, 29);'
+    ],
+       [
+        'group'=> [3,4,5,6,7,8,9,10,11,12],
+        'period' => [4,5,6,7],
+        'color' => 'rgb(221, 235, 142);'
+    ],
+    [
+        'group'=> [13],
+        'period' => [2],
+        'color' => 'rgb(58, 205, 241);'
+    ],
+    [
+        'group'=> [13],
+        'period' => [3,4,5,6,7],
+        'color' => 'rgb(74, 214, 70);'
+    ],
+    [
+        'group'=> [14,15,16],
+        'period' => [2],
+        'color' => 'rgb(36, 111, 182);'
+    ],
+    [
+        'group'=> [14],
+        'period' => [3,4],
+        'color' => 'rgb(58, 205, 241);'
+    ],
+    [
+        'group'=> [14],
+        'period' => [5,6,7],
+        'color' => 'rgb(74, 214, 70);'
+    ],
+    [
+        'group'=> [15],
+        'period' => [4,5],
+        'color' => 'rgb(58, 205, 241);'
+    ],
+    [
+        'group'=> [15],
+        'period' => [6,7],
+        'color' => 'rgb(74, 214, 70);'
+    ],
+    [
+        'group'=> [15,16],
+        'period' => [3],
+        'color' => 'rgb(36, 111, 182);'
+    ],
+    [
+        'group'=> [16],
+        'period' => [4],
+        'color' => 'rgb(36, 111, 182);'
+    ],
+    [
+        'group'=> [16],
+        'period' => [5,6],
+        'color' => 'rgb(58, 205, 241);'
+    ],
+    [
+        'group'=> [16],
+        'period' => [7],
+        'color' => 'rgb(74, 214, 70);'
+    ],
+    [
+        'group'=> [17],
+        'period' => [2,3,4,5,6,7],
+        'color' => 'rgb(168, 70, 214);'
+    ],
+    [
+        'group'=> [18],
+        'period' => [1,2,3,4,5,6,7],
+        'color' => 'rgb(60, 10, 83);'
+    ],
+];
+
+
      $html = "<!DOCTYPE html>\n<html>\n<head>";
      $html .= "\n<style>\n";
-     $html .= ".tdd {\n\tborder: 1px solid black;\n\tborder-collapse: collapse;\n}\n";
+     $html .= "td {\n\tborder: 1px solid black;\n\twidth: 95px;\n\theight: 95px; \n}\n";
+     $html .= "dt, dd, dl, tr, td {\n\tmargin: 0;\n\tpadding: 0\n}\n";
+     $html .= "h4 {\n\ttext-align: center;\n\tfont-size:50%;\n\tmargin: 0;\n\tpadding-bottom: 10px;\n}\n";
      $html .= "</style>\n";
-     $html .= "\n<title>Tableau de Mendeleiev</title>\n</head>\n<body>\n";
-     $html .= "<h2>Tableau Périodique des Éléments</h2>\n";
+     $html .= "\n\t<title>Tableau de Mendeleiev</title>\n</head>\n<body>\n";
+     $html .= "\t<h2 style=\"text-align: center; \">Tableau Périodique des Éléments</h2>\n";
    
 
     $handle=file_get_contents("ex06.txt");
     $number=explode("\n", $handle);
 
-    $html .= "<table>\n";
-    /* boucle ici
-    position correspond au groupe
-    quand le group = 17, on incremente la periode
-
-    */
+    function get_color_for($group, $period, $array_colors) {
+        foreach ($array_colors as $rule) {
+            $groups = (array) $rule['group'];    
+            $periods = (array) $rule['period'];
+            
+            if (in_array($group, $groups) && in_array($period, $periods)) {
+                return $rule['color'];
+            }
+        }
+        return null; // Pas trouvé
+    }
+    
+   
     $period_max=8;
     $group_max=18;
 	$group = 0;
-	$period = 0;
+	$period = 1;
 	
-    // $index = 0; //position
-    // for($period = 0; $period <$period_max; $period++)
-    // {
-	// 	echo "period: ".$period."  \n";
+    $html .= "<table>\n";
     $previous_elem=-1;
 		foreach($number as $key => $value)
-		{
-			// echo " chgt de value: ".$value."  \n";
-			// echo "begin foreach group: ". $group." \n";
-            // echo "previous elem: ". $previous_elem." \n";
-            
+		{         
 			if(empty($value)){
 				break;
 			}			
 			$line = $value;
 			// echo $line."\n";
 			preg_match('/^(\w+) = position:(\d+), (.+)$/', $line, $matches);
-			// print_r($matches); 
-			//revoir cette partie;
 			if($matches[2] == 0)
 			{
-				$html .= "<tr>\n";
-                $period +=1;
+				$html .= "\t<tr>\n";
+                // $period +=1;
                 // echo "new <tr>, $period \n";
 			}			
             
@@ -52,133 +143,63 @@
                 // echo "for group: ". $group." \n";
                 if( $group != $matches[2] )
                 {
-                    // echo "dans le if:  \n";
-                    $html .= "\t<td></td>\n";
-                    // echo "pas d element dans cette ligne.\n";
+                    $html .= "\t\t<td style=\"border-style: none;\"></td>\n";
                     // echo $matches[2]." \n";
-                    // echo $group. " <td></td>\n";
                 }
                 else
                 {
                     $name= $matches[1];
-                    $data = $matches[3];
-                    // echo $name."\n";
-                    // echo $data."\n";
+                    $data = $matches[3];                  
                     $dataextract=explode(", ", $data);
-                    $composition=[];
-                    // echo "dans le else:  \n";
-                    // print_r($dataextract);
+                    $composition=[];               
                     $composition["name"]=$name;
                     foreach($dataextract as $value)
                     {
                         list($key,$val)=explode(":",$value);
                         $composition[$key]=$val;
                     }
-                    // $html .= "\t<td class =\".tdd\">\n";
-                    $html .= "\t<td style=\"border-width: 1px; border-style: solid; border-color: #424242; padding:10px\";>\n";
-                    $html .= "\t<h4>{$composition["name"]}</h4>\n";
-                    $html .= "\t\t<ul>\n";
-                    $html .= "\t\t\t<li>{$composition["number"]}</li>\n";
-                    $html .= "\t\t\t<li>{$composition["small"]}</li>\n";
-                    $html .= "\t\t\t<li>{$composition["molar"]}</li>\n";
-                    // $html .= "\t\t\t<li>{$composition["electron"]}</li>\n";
-                    $html .= "\t\t</ul>\n";
-                    $html .= "\t</td>\n";
+                    $background = get_color_for($group + 1, $period, $array_colors);
+                    // echo " background ". $background." \n";
+                    $html .= "\t\t<td style=\"background-color: {$background}\">\n";
+                    // $html .= "\t\t<td >\n";
+                    $html .= "\t\t\t<dl>\n";
+                    // $html .= "\t\t\t\t<dt><h4>{$composition["name"]}</h4></dt>\n";
+                    // $html .= "\t\t\t\t<dd style=\"text-align: center; font-weight: bold; font-size:80%;\">{$composition["number"]}</dd>\n";
+                    // $html .= "\t\t\t\t<dd style=\"text-align: center; font-size:150%; font-weight: bold;\">{$composition["small"]}</dd>\n";
+                    // $html .= "\t\t\t\t<dd style=\"text-align: center; font-size:60%; padding-top: 30px;\">{$composition["molar"]}</dd>\n";
+                    // $html .= "\t\t\t<dd>{$composition["electron"]}</dd>\n";
+                    
+                    $html .= "\t\t\t\t<dt style=\"text-align: left; font-weight: bold; font-size:80%;\">{$composition["number"]}</dt>\n";         
+                    $html .= "\t\t\t\t<dd style=\"text-align: center; font-size:100%; font-weight: bold;padding-top: 15px;\">{$composition["small"]}</dd>\n";
+                    $html .= "\t\t\t\t<dd><h4>{$composition["name"]}</h4></dd>\n";
+                    $html .= "\t\t\t\t<dd style=\"text-align: center; font-size:50%; padding-top: 15px;\">{$composition["molar"]}</dd>\n";
+                    $html .= "\t\t\t</dl>\n";
+                    $html .= "\t\t</td>\n";
                     // print_r($composition);
                     if($matches[2] == 17)
                     {
-                        $html .= "</tr>\n";
-                        // echo "on ferme </tr> \n";
+                        $html .= "\t</tr>\n";
                     }                   
                     break;
-                    //fin de la ligne, fermer <tr> 
                 }               
             }
             if($matches[2] != 17)
+            {
                 $previous_elem=$matches[2];
+                
+            }
             else
+            {
                 $previous_elem=-1;
+                $period++;
+            }
+
 
         }
-    // Ouvrir le fichier HTML en écriture
+    $html .= "</table>\n</body>\n</html>\n";
+// creation et enregistrement dans le fichier html
+
 $htmlFile = fopen("mendeleiev.html", "w");
-
-// Fermer la table et la page HTML
-$html .= "</table>\n</body>\n</html>\n";
-
-// Écrire dans le fichier et fermer
 fwrite($htmlFile, $html);
 fclose($htmlFile);
 
-
-
-
-
-
-/*			
-            foreach($number as $value)
-            {
-                $line = $value;
-                echo $line;
-                preg_match('/^(\w+) = (.+)$/', $line, $matches);
-                if(!$matches){
-                    die("format incorrect");
-                }
-                $name= $matches[1];
-                $data = $matches[2];
-                // echo $name."\n";
-                // echo $data."\n";
-                $dataextract=explode(", ", $data);
-                $composition=[];
-                // print_r($dataextract);
-                $composition["name"]=$name;
-                foreach($dataextract as $value)
-                {
-                    list($key,$val)=explode(":",$value);
-                    $composition[$key]=$val;
-                }
-                if($composition[position] == $group)
-                {
-                    $html .= "<td>\n";
-                    $html .= "<h4>{$composition[name]}</h4>\n";
-                    $html .=  "<ul>\n";
-                    $html .=   "<li>{$composition[number]}</li>\n";
-                    $html .=   "<li>{$composition[small]}</li>\n";
-                    $html .=   "<Li>{$composition[molar]} </ li>\n";
-                    $html .=   "<li>{$composition[electron]}</li>\n";
-                    $html .=   "<ul>\n";
-                    $html .=   "</td>\n";
-                }
-                else
-                {
-                    $html .= "<td></td>\n";
-                }
-            }
-            // print_r($composition);
-        }
-    }
-
-/*
-$html .= "<td>\n";
-                $html .= "<b>{$el['symbol']}</b><br>\n";
-                $html .= "<small>{$el['name']} ({$el['num']})</small>\n";
-                $html .= "<ul>\n";
-                $html .= "<li>Masse: {$el['mass']}</li>\n";
-                $html .= "</ul>\n</td>\n";
-                $found = true;
-                break;
-
-
-
-<table>
-<tr>
-$html .= "<td style="border: 1px solid black; padding:10px">\n"
-$html .= "<h4>{$composition[name]}</h4>\n"
-$html .=  "<ul>\n"
-$html .=   "<li>{$composition[number]}</li>\n"
-$html .=   "<li>{$composition[small]}</li>\n"
-$html .=   "<Li>{$composition[molar]} </ li>\n"
-$html .=   "<li>{$composition[electron]}</li>\n"
-$html .=   "<ul>\n"
-$html .=   "</td>\n"
-*/
