@@ -1,12 +1,16 @@
 <?php
-     $html = "<!DOCTYPE html>\n<html>\n<head>\n<title>Tableau de Mendeleiev</title>\n</head>\n<body>\n";
+     $html = "<!DOCTYPE html>\n<html>\n<head>";
+     $html .= "\n<style>\n";
+     $html .= "td {\nborder: 1px solid black;\nborder-collapse: collapse;\n}\n";
+     $html .= "</style>\n";
+     $html .= "\n<title>Tableau de Mendeleiev</title>\n</head>\n<body>\n";
      $html .= "<h2>Tableau Périodique des Éléments</h2>\n";
    
 
     $handle=file_get_contents("ex06.txt");
     $number=explode("\n", $handle);
 
-    $html .= "<table border='1' style='border-collapse: collapse; text-align: center;'>\n";
+    $html .= "<table>\n";
     /* boucle ici
     position correspond au groupe
     quand le group = 17, on incremente la periode
@@ -51,8 +55,8 @@
                     // echo "dans le if:  \n";
                     $html .= "\t<td></td>\n";
                     // echo "pas d element dans cette ligne.\n";
-                    echo $matches[2]." \n";
-                    echo $group. " <td></td>\n";
+                    // echo $matches[2]." \n";
+                    // echo $group. " <td></td>\n";
                 }
                 else
                 {
@@ -70,16 +74,16 @@
                         list($key,$val)=explode(":",$value);
                         $composition[$key]=$val;
                     }
-                    $html .= "\t<td>\n";
+                    $html .= "\t<td >\n";
                     $html .= "\t<h4>{$composition["name"]}</h4>\n";
                     $html .= "\t\t<ul>\n";
                     $html .= "\t\t\t<li>{$composition["number"]}</li>\n";
                     $html .= "\t\t\t<li>{$composition["small"]}</li>\n";
                     $html .= "\t\t\t<li>{$composition["molar"]}</li>\n";
-                    $html .= "\t\t\t<li>{$composition["electron"]}</li>\n";
+                    // $html .= "\t\t\t<li>{$composition["electron"]}</li>\n";
                     $html .= "\t\t</ul>\n";
                     $html .= "\t</td>\n";
-                    print_r($composition);
+                    // print_r($composition);
                     if($matches[2] == 17)
                     {
                         $html .= "</tr>\n";
