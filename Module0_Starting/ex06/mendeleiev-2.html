@@ -3,8 +3,11 @@
 <head>
 <style>
 .tdd {
-	border: 1px solid black;
 	border-collapse: collapse;
+    border-width: 1px; 
+    border-style: solid; 
+    border-color: #424242; 
+    padding:10px
 }
 </style>
 
@@ -14,13 +17,14 @@
 <h2>Tableau Périodique des Éléments</h2>
 <table>
 <tr>
-	<td style="border-width: 1px; border-style: solid; border-color: #424242; padding:10px";>
-	<h4>Hydrogen</h4>
-		<ul>
-			<li>1</li>
-			<li> H</li>
-			<li>1.00794</li>
-		</ul>
+	<td style="border-width: 1px; border-style: solid; border-color: #424242; padding-left:10px; padding-right:0px">
+		
+		<dl>
+			<dt><p style="font-size:medium;">1</p></dd>
+			<dd style ="font-size:large; font-weight: bold;">H</dd>
+			<dt><h4 style="text-align: center; font-family: 'Times New Roman', Times, serif;">Hydrogen</h4></dt>
+			<dd style ="text-align: center;">1.00794</dd>
+		</dl>
 	</td>
 	<td></td>
 	<td></td>
@@ -38,7 +42,7 @@
 	<td></td>
 	<td></td>
 	<td></td>
-	<td style="border-width: 1px; border-style: solid; border-color: #424242; padding:10px";>
+	<td class = ".tdd">
 	<h4>Helium</h4>
 		<ul>
 			<li>2</li>

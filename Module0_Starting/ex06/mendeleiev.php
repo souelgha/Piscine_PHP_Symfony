@@ -1,7 +1,7 @@
 <?php
      $html = "<!DOCTYPE html>\n<html>\n<head>";
      $html .= "\n<style>\n";
-     $html .= "td {\nborder: 1px solid black;\nborder-collapse: collapse;\n}\n";
+     $html .= ".tdd {\n\tborder: 1px solid black;\n\tborder-collapse: collapse;\n}\n";
      $html .= "</style>\n";
      $html .= "\n<title>Tableau de Mendeleiev</title>\n</head>\n<body>\n";
      $html .= "<h2>Tableau Périodique des Éléments</h2>\n";
@@ -74,7 +74,8 @@
                         list($key,$val)=explode(":",$value);
                         $composition[$key]=$val;
                     }
-                    $html .= "\t<td >\n";
+                    // $html .= "\t<td class =\".tdd\">\n";
+                    $html .= "\t<td style=\"border-width: 1px; border-style: solid; border-color: #424242; padding:10px\";>\n";
                     $html .= "\t<h4>{$composition["name"]}</h4>\n";
                     $html .= "\t\t<ul>\n";
                     $html .= "\t\t\t<li>{$composition["number"]}</li>\n";
