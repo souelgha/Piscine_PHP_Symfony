@@ -15,7 +15,14 @@ class Text
 	public function readData(){
 		$html ="";
 		foreach($this->texts as $line){
-			$html .= "\t\t<p>".htmlspecialchars($line)."<p>\n";
+			if(stripos($line, 'prix') !== false){
+				$html .= "\t\t<p>".htmlspecialchars($line)." &euro;<p>\n";
+
+			}
+			else{
+				$html .= "\t\t<p>".htmlspecialchars($line). "<p>\n";
+			}
+			
 		}
 		print_r($html);
 		return $html;

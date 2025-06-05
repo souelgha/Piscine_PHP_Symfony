@@ -6,7 +6,7 @@ $texts = new Text([
     "Dans les bois",
     "Auteur : Paul Pierre",
     "Description : Thriller",
-    "prix : 10.99 &euro;"
+    "prix : 10.99" 
 ]);
 
 
