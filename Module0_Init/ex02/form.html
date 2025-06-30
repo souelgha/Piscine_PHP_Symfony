@@ -33,29 +33,27 @@
 				padding: 5%;
 			}
         </style>
-    <!-- balise style dans le header -->
     	<title>Mon Formulaire</title>    
 	</head>
 
 <body>
-	<!-- renvoi vers displayFormContents() -->
 	<form>
-		<label >Firstname :</label>
+		<label for="firstname" >Firstname :</label>
 			<input type="text" id="firstname" name="firstname" required></input><br>
 		
-		<label >Name :</label>
+		<label for="name" >Name :</label>
 			<input type="text" id="name" name="name" required></input><br>
 		
-		<label >Age :</label>
+		<label for="age" >Age :</label>
 			<input type="number" id="age" name="age" min = "18" max = "100" required></input><br>
 		
-		<label >Phone :</label>
+		<label  for="phone">Phone :</label>
 			<input type="tel" id="phone" name="phone" required></input><br>
 		
-		<label >Email :</label>
-			<input type="email" id="email" name="email"></input><br>
+		<label for="email">Email :</label>
+			<input type="email" id="email" name="email" required></input><br>
 		
-		<label >Student at 42 ? :</label>
+		<label for="student" >Student at 42 ? :</label>
 			<input type="checkbox" id="student" name="student" checked></input><br>
 		
 		<input type="radio" id="gender_male" name="Gender" value ="Male" checked></input>
