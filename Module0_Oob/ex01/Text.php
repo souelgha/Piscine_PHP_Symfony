@@ -16,15 +16,15 @@ class Text
 		$html ="";
 		foreach($this->texts as $line){
 			if(stripos($line, 'prix') !== false){
-				$html .= "\t\t<p>".htmlspecialchars($line)." &euro;<p>\n";
+				$html .= "\t\t<p>".htmlspecialchars($line)." &euro;</p>\n";
 
 			}
 			else{
-				$html .= "\t\t<p>".htmlspecialchars($line). "<p>\n";
+				$html .= "\t\t<p>".htmlspecialchars($line). "</p>\n";
 			}
 			
 		}
-		print_r($html);
+		// print_r($html);
 		return $html;
 	}
 	public function gettext(){

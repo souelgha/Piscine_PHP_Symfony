@@ -13,6 +13,12 @@ class Coffee extends HotBeverage
 		$this->$description ='black american coffee';
 		$this->$comment = 'best expresso';
 	}
+	public function getdescription(): string{
+		return($this->$description);
+	}
+	public function getcomment(): string{
+		return($this->$comment);
+	}
 
 
 }

@@ -13,6 +13,13 @@ class Tea extends HotBeverage
 		$this->$description ='Earl Grey Tea';
 		$this->$comment = 'From India';
 	}
+	public function getdescription(): string{
+		return($this->$description);
+	}
+	public function getcomment(): string{
+		return($this->$comment);
+	}
+
 
 
 }
