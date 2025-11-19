@@ -9,7 +9,12 @@ $texts = new Text([
     "prix : 10.99" 
 ]);
 
-
-$engine->createFile("book.html", $texts);
- 
-echo "Fichier 'book.html' généré avec succès.";
+if($texts->isEmpty()){
+	throw new Exception("No data to write");
+	return;	
+}
+else {
+	$engine->createFile("book1.html", $texts);
+	echo "Fichier 'book1.html' généré avec succès.";	
+	
+}

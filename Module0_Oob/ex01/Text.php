@@ -27,8 +27,12 @@ class Text
 		// print_r($html);
 		return $html;
 	}
-	public function gettext(){
+
+	public function getFirstValue(){
 		return($this->texts[0]);
 	}
-
+	public function isEmpty() {
+		return empty($this->texts);
+	}
+	
 }
