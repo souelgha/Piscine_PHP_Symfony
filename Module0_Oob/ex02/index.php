@@ -1,15 +1,16 @@
 <?php
 
 require_once 'TemplateEngine.php';
+require_once 'Coffee.php';
+require_once 'Tea.php';
+
 $engine = new TemplateEngine();
-$texts = new Text([
-    "Dans les bois",
-    "Auteur : Paul Pierre",
-    "Description : Thriller",
-    "prix : 10.99" 
-]);
+$drink1 = new Tea();
+$drink2 = new Coffee();
 
 
-$engine->createFile("book.html", $texts);
+$engine->createFile($drink1);
+echo "Fichier 'Tea.html' généré avec succès.";
+$engine->createFile($drink2);
+echo "Fichier 'Coffee.html' généré avec succès.";
  
-echo "Fichier 'book.html' généré avec succès.";

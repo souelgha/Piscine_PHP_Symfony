@@ -7,17 +7,17 @@ class Coffee extends HotBeverage
 	private string $comment;
 
 	public function  __construct(){
-		$this->$name='Coffee';
-		$this->$price = 3.0;
-		$this->$resistance = 4;
-		$this->$description ='black american coffee';
-		$this->$comment = 'best expresso';
+		$this->name="Coffee";
+		$this->price = 3.0;
+		$this->resistance = 4;
+		$this->description ="black american coffee";
+		$this->comment = "best expresso";
 	}
-	public function getdescription(): string{
-		return($this->$description);
+	public function getDescription(): string{
+		return($this->description);
 	}
-	public function getcomment(): string{
-		return($this->$comment);
+	public function getComment(): string{
+		return($this->comment);
 	}
 
 

@@ -7,19 +7,16 @@ class Tea extends HotBeverage
 	private string $comment;
 
 	public function  __construct(){
-		$this->$name='Tea';
-		$this->$price = 4.5;
-		$this->$resistance = 2;
-		$this->$description ='Earl Grey Tea';
-		$this->$comment = 'From India';
+		$this->name="Tea";
+		$this->price = 4.5;
+		$this->resistance = 2;
+		$this->description ="Earl Grey Tea";
+		$this->comment = "From India";
 	}
-	public function getdescription(): string{
-		return($this->$description);
+	public function getDescription(): string{
+		return($this->description);
 	}
-	public function getcomment(): string{
-		return($this->$comment);
+	public function getComment(): string{
+		return($this->comment);
 	}
-
-
-
 }
