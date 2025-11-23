@@ -15,12 +15,12 @@ class Elem {
 	public function __construct($element, $content = null){
 		if(!in_array($element, self::$oneclose)
 			&& !in_array($element, self::$twoclose)){
-		echo $element, "\n";
+		// echo $element, "\n";
 			echo("Error: Element not allowed \n");
 			return;
 		}
 		$this->element=$element;
-		echo $this->element, "\n";
+		// echo $this->element, "\n";
 		if($content !== null){
 			$this->pushElement($content);
 		}
@@ -36,11 +36,11 @@ class Elem {
 	public function getHTML(){		
 			$htmlcontent="";
 			static $nbIndentation=0;
-			echo $nbIndentation, "\n";
+			// echo $nbIndentation, "\n";
 			$indentation=str_repeat("\t", $nbIndentation);
 		
 		foreach($this->content as $elem){
-			print_r($elem);echo"\n";
+			// print_r($elem);echo"\n";
 			if($elem instanceof Elem){
 				$nbIndentation++;
 				$htmlcontent .= "\n" . $elem->getHTML();
@@ -51,19 +51,19 @@ class Elem {
 			}
 		}
 		if(in_array($this->element, self::$oneclose)){
-			return $indentation."<". $this->element. $htmlcontent . " />";			
+			return $indentation."<". $this->element." ". $htmlcontent . " />";			
 		}
 		else{
-			if(is_string($htmlcontent)){
-				$firstTag= $indentation."<". $this->element. ">";	
-				$closeTag= "</".$this->element.">"."\n".$indentation;
-				return $firstTag. $htmlcontent. $closeTag;		
-			}
-			else{
+			// if(is_string($htmlcontent)){
+			// 	$firstTag= $indentation."<". $this->element. ">";
+			// 	$closeTag= "</".$this->element.">"."\n".$indentation;
+			// 	return $firstTag. $htmlcontent. $closeTag;		
+			// }
+			// else{
 				$firstTag= $indentation."<". $this->element. ">";			
 				$closeTag= "\n".$indentation. "</".$this->element.">";
 				return $firstTag. $htmlcontent. $closeTag;
 			}			
-		}
+		// }
 	}	
 }
