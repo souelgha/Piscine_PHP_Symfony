@@ -27,23 +27,23 @@ class Elem {
 		return;
 
 	}
-// ajout un element au contenu de la balise
+// ajout un element au contenu de la balise. on les stocke dans un tableau
 	public function pushElement($element){
 		$this->content[]=$element;
 	}
 
-// return le code HTML
+// return le code HTML:pour obtenir les balises imbriquees, on doit faire un appel recursif a getHTML.
+
 	public function getHTML(){		
 			$htmlcontent="";
-			static $nbIndentation=0;
-			// echo $nbIndentation, "\n";
+			static $nbIndentation=0;		
 			$indentation=str_repeat("\t", $nbIndentation);
 		
 		foreach($this->content as $elem){
-			// print_r($elem);echo"\n";
 			if($elem instanceof Elem){
 				$nbIndentation++;
 				$htmlcontent .= "\n" . $elem->getHTML();
+				echo $htmlcontent, "\n";				
 				$nbIndentation--;
 			}
 			else{
@@ -54,16 +54,10 @@ class Elem {
 			return $indentation."<". $this->element." ". $htmlcontent . " />";			
 		}
 		else{
-			// if(is_string($htmlcontent)){
-			// 	$firstTag= $indentation."<". $this->element. ">";
-			// 	$closeTag= "</".$this->element.">"."\n".$indentation;
-			// 	return $firstTag. $htmlcontent. $closeTag;		
-			// }
-			// else{
-				$firstTag= $indentation."<". $this->element. ">";			
-				$closeTag= "\n".$indentation. "</".$this->element.">";
-				return $firstTag. $htmlcontent. $closeTag;
+			$firstTag= $indentation."<". $this->element. ">";			
+			$closeTag= "\n".$indentation. "</".$this->element.">";
+			return $firstTag. $htmlcontent. $closeTag;
 			}			
-		// }
+
 	}	
 }
