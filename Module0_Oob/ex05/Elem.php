@@ -76,8 +76,7 @@ class Elem {
 			$firstTag= $indentation."<". $this->element. $stringattributes. ">";			
 			$closeTag= "\n".$indentation. "</".$this->element.">";
 			return $firstTag. $htmlcontent. $closeTag;
-		}			
-
+		}
 	}
 
 	public function validPage(){
@@ -87,53 +86,72 @@ class Elem {
 		$nbtitle=0;
 		$nbmeta=0;
 		echo "Valid Page Check:\n";
-		// print_r($this->content); 
+		echo "Verification de la balise HTML...\n";
+		if($this->element != "html"){
+			echo "Il manque la balise html\n";
+			return false;
+		}
+		//print_r($this->content); 
+		if(count($this->content) !=2){
+			echo "trop d element dans le html\n";
+			return false;
+		}
+		if($this->content[0]->element != "head" || $this->content[1]->element != "body"){
+			echo "head ou body mal positionne\n";
+			return false;
+		}
+		echo "La balise HTML est correct\n";
+
 		foreach($this->content as $elem){
 			if($elem instanceof Elem){
-				echo "ici\n";
-				echo $elem->element,  "\n";
 				if($elem->element=="head"){
-					$nbHead++;
-					echo "ici head\n";
-					echo $elem->element, " nb head: ", $nbHead, "\n";
+					echo "Verification de la balise head...\n";
 					foreach($elem->content as $subelem){
 						if($subelem instanceof Elem){
-							if($subelem->element=="meta"){
-								$nbmeta+=1;
-								echo "nb meta: ", $nbmeta, "\n";
-							}
-							if($subelem->element=="title"){
-								$nbtitle+=1;
-								echo "nb title: ", $nbtitle, "\n";
+							if (($subelem->element=="meta" && $nbmeta < 1)|| ($subelem->element=="title" && $nbtitle < 1)){
+								if($subelem->element=="meta"){
+									$nbmeta+=1;
+								}
+								if($subelem->element=="title"){
+									$nbtitle+=1;
+								}
+							}else{
+								echo "head non conforme\n";
+								return false;						
 							}
 						}
 					}
+					echo "La balise Head est correct\n";
 				}
 				if($elem->element=="body"){
-					$nbBody++;
-					echo "ici body\n";
-					echo $elem->element, " nb body: ", $nbBody, "\n";
-					// finir la partie body et validPag()
-					// foreach($elem->content as $subelem){
-					// 	if($subelem instanceof Elem){
-					// 		if($subelem->element=="meta"){
-					// 			$nbmeta+=1;
-					// 			echo "nb meta: ", $nbmeta, "\n";
-					// 		}
-					// 		if($subelem->element=="title"){
-					// 			$nbtitle+=1;
-					// 			echo "nb title: ", $nbtitle, "\n";
-					// 		}
-					// 	}
-					// }
+					echo "Verification de la balise body...\n";
+					foreach($elem->content as $subelem){
+						if($subelem instanceof Elem){
+							if(($subelem ->element == "p")){
+								foreach($subelem->content as $sub2){
+									if($sub2 instanceof Elem){
+										echo "balise <p> contient une autre balise\n";
+										return false;
+									}
+								}
+							}
+							if(($subelem->element == "table")){
+								foreach($subelem->content as $sub2){
+									if($sub2 instanceof Elem && sub2->element != "tr"){
+										echo "mauvaise balise dans la table p\n";
+										return false;
+									}else{
+
+									}
+								}
+							}
+						}
+					}
+					echo "La balise Body est correcte\n";					
 				}
 			}
 		}
-		echo "nb html: ", $nbHtml, "\n";
-		echo "nb head: ", $nbHead, "\n";
-		echo "nb body: ", $nbBody, "\n";
-		echo "nb title: ", $nbtitle, "\n";
-		echo "nb meta: ", $nbmeta, "\n";
-		// return $hasHtml && $hasHead && $hasBody;
+		
+
 	}
 }

@@ -14,10 +14,13 @@ try{
 	// $bod =  new Elem('bod');
 	
 
-
+	//$elem->pushElement(new Elem('body'));
 	$head->pushElement(new Elem('meta', 'charset="UTF-8"'));
 	$head->pushElement(new Elem('title', 'Mon HTML'));
+	//$head->pushElement(new Elem('title', '2e HTML'));
 	$elem->pushElement($head);
+	
+	//$elem->pushElement(new Elem('tr'));
 
 	$body->pushElement(new Elem('h1', 'Hello World!', ['class' => 'text-muted']));
 	$body->pushElement(new Elem('p', 'This is a paragraph.', ['class' => 'text-muted']));
@@ -29,7 +32,7 @@ try{
 	$body->pushElement($table);
 
 
-	// $elem->pushElement($body);
+	$elem->pushElement($body);
 	$file= new TemplateEngine($elem);
 	$file->createFile('index.html');
 	$elem->validPage();
