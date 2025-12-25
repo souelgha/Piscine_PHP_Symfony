@@ -80,32 +80,29 @@ class Elem {
 	}
 
 	public function validPage(){
-		$nbHtml=0;
-		$nbHead=0;
-		$nbBody=0;
 		$nbtitle=0;
 		$nbmeta=0;
 		echo "Valid Page Check:\n";
-		echo "Verification de la balise HTML...\n";
+		echo "Verification de la balise <html>...\n";
 		if($this->element != "html"){
-			echo "Il manque la balise html\n";
+			echo "\033[31mIl manque la balise <html>\033[0m\n";
 			return false;
 		}
 		//print_r($this->content); 
 		if(count($this->content) !=2){
-			echo "trop d element dans le html\n";
+			echo "\033[31mtrop d element dans le <html>\033[0m\n";
 			return false;
 		}
 		if($this->content[0]->element != "head" || $this->content[1]->element != "body"){
-			echo "head ou body mal positionne\n";
+			echo "\033[31m<head> ou <body> mal positionne\033[0m\n";
 			return false;
 		}
-		echo "La balise HTML est correct\n";
+		echo "La balise <html> est correct\n";
 
 		foreach($this->content as $elem){
 			if($elem instanceof Elem){
 				if($elem->element=="head"){
-					echo "Verification de la balise head...\n";
+					echo "Verification de la balise <head>...\n";
 					foreach($elem->content as $subelem){
 						if($subelem instanceof Elem){
 							if (($subelem->element=="meta" && $nbmeta < 1)|| ($subelem->element=="title" && $nbtitle < 1)){
@@ -116,38 +113,51 @@ class Elem {
 									$nbtitle+=1;
 								}
 							}else{
-								echo "head non conforme\n";
+								echo "\033[31m<head> non conforme\033[0m\n";
 								return false;						
 							}
 						}
 					}
-					echo "La balise Head est correct\n";
+					echo "La balise <head> est correct\n";
 				}
 				if($elem->element=="body"){
-					echo "Verification de la balise body...\n";
+					echo "Verification de la balise <body>...\n";
 					foreach($elem->content as $subelem){
 						if($subelem instanceof Elem){
 							if(($subelem ->element == "p")){
 								foreach($subelem->content as $sub2){
 									if($sub2 instanceof Elem){
-										echo "balise <p> contient une autre balise\n";
+										echo "\033[31mla balise <p> contient une autre balise\033[0m\n";
 										return false;
 									}
 								}
 							}
 							if(($subelem->element == "table")){
 								foreach($subelem->content as $sub2){
-									if($sub2 instanceof Elem && sub2->element != "tr"){
-										echo "mauvaise balise dans la table p\n";
+									if($sub2 instanceof Elem && $sub2->element != "tr"){
+										echo "\033[31mmauvaise balise dans la <table>\033[0m\n";;
 										return false;
-									}else{
-
+									}else if($sub2 instanceof Elem && $sub2->element == "tr"){
+										foreach($sub2->content as $sub3){
+											if($sub3 instanceof Elem && $sub3->element != "td" && $sub3->element != "th"){
+												echo "\033[31mla balise doit etre <td> ou <th>\033[0m\n";
+												return false;
+											}
+										}
 									}
 								}
 							}
+							if(($subelem->element == "ol") || ($subelem->element == "ul")){
+								foreach($subelem->content as $sub2){
+									if($sub2 instanceof Elem && $sub2->element != "li"){
+										echo "\033[31mla balise doit etre <li>\033[0m\n";
+										return false;
+									}
+								}								
+							}
 						}
 					}
-					echo "La balise Body est correcte\n";					
+					echo "La balise <body> est correcte\n";					
 				}
 			}
 		}
