@@ -2,7 +2,7 @@
 <?php
 
 $var1 = 10;
-$var2 = 10;
+$var2 = "10";
 $var3 = "ten hello";
 $var4 = 10.0;
 

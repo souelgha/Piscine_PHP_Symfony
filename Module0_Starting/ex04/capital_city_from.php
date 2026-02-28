@@ -1,7 +1,7 @@
 
 <?php
-function capital_city_from(string $target): string{
-    $states = [
+
+ $states = [
         'Oregon' => 'OR',
         'Alabama' => 'AL',
         'New Jersey' => 'NJ',
@@ -14,15 +14,16 @@ function capital_city_from(string $target): string{
         'KS' => 'Topeka',
     ];
 
-    foreach($states as $etat => $code){
-        if($etat == $target)
-        {
-            // echo $code;
-            if(isset($capitals[$code]))             
-                return $capitals[$code]."\n";
-        }
-    }
-    return("Unknown\n");
-}                      
+                   
+function capital_city_from(string $target): string{
+   global $states, $capitals;
 
+    if(isset($states[$target])) {
+		if(isset($capitals[$states[$target]]))
+                return $capitals[$states[$target]] . "\n";
+        }    
+    return("Unknown\n");
+}                    
+// <!-- isset fonction => verifie si une variable existe et n'est pas null -->
 ?>
+
