@@ -42,48 +42,4 @@ function search_by_states(string $data){
 	};
 	
 }   
-// array_seache => permet de trouver la 1ere key d un tableau a partir de sa valeur                  
-// function search_by_states(string $data){
-// 	global $states, $capitals;
-//     $stringreturn=[];
-
-   
-//     $items=explode(", ", $data);
-//     $index= 0;
-//     foreach($items as $value)
-//     {  
-//         foreach($states as $etat => $code)
-//         {
-//             if($etat == $value)
-//             {
-//                 $key= array_key_exists($code,$capitals);
-//                 if(!$key)
-//                     $stringreturn[$index++]= $value. " is neither a capital nor a state.\n";
-//                 else              
-//                     $stringreturn[$index++]= $capitals[$code] . " is the capital of ".$value.".\n";
-//                 break;                
-//             }            
-//         }
-//         foreach($capitals as $code => $cap)
-//         {
-//             if($cap == $value)
-//             {
-//                 $key= array_search($code,$states);
-//                 if(!$key)
-//                     $stringreturn[$index++]= $value. " is neither a capital nor a state.\n";
-//                 else
-//                     $stringreturn[$index++]= $cap . " is the capital of ". $key.".\n"; 
-//                 break;                
-//             }            
-
-//         }
-//         if(!(array_key_exists($value,$states)) && !(array_search($value,$capitals)))
-//             $stringreturn[$index++]= $value. " is neither a capital nor a state.\n";
-
-//     }
-//     unset($stringreturn[$index]);
-//     foreach($stringreturn as $value)
-//         echo $value;
-// }                      
-
-
+// array_seach => permet de trouver la 1ere key d'un tableau a partir de sa valeur                  

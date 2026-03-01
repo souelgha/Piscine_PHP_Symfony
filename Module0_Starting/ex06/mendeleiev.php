@@ -93,7 +93,8 @@ $array_colors=[
      $html = "<!DOCTYPE html>\n<html>\n<head>";
      $html .= "\n<style>\n";
      $html .= "td {\n\tborder: 1px solid black;\n\twidth: 95px;\n\theight: 95px; \n}\n";
-     $html .= "dt, dd, dl, tr, td {\n\tmargin: 0;\n\tpadding: 0\n}\n";
+	 $html .= "ul {\n\tlist-style: none;\n}\n";
+     $html .= "ul, li, tr, td {\n\tmargin: 0;\n\tpadding: 0;\n}\n";
      $html .= "h4 {\n\ttext-align: center;\n\tfont-size:50%;\n\tmargin: 0;\n\tpadding-bottom: 10px;\n}\n";
      $html .= "</style>\n";
      $html .= "\n\t<title>Tableau de Mendeleiev</title>\n</head>\n<body>\n";
@@ -107,15 +108,14 @@ $array_colors=[
         foreach ($array_colors as $rule) {
             $groups = (array) $rule['group'];    
             $periods = (array) $rule['period'];
-            
+			            
             if (in_array($group, $groups) && in_array($period, $periods)) {
+				// echo "colors\n";print_r($rule);
                 return $rule['color'];
             }
         }
-        return null; // Pas trouvé
+        return null;
     }
-    
-   
     $period_max=8;
     $group_max=18;
 	$group = 0;
@@ -131,6 +131,7 @@ $array_colors=[
 			$line = $value;
 			// echo $line."\n";
 			preg_match('/^(\w+) = position:(\d+), (.+)$/', $line, $matches);
+			// echo "matches\n";print_r($matches);
 			if($matches[2] == 0)
 			{
 				$html .= "\t<tr>\n";
@@ -158,24 +159,20 @@ $array_colors=[
                         list($key,$val)=explode(":",$value);
                         $composition[$key]=$val;
                     }
+					print_r($composition);
                     $background = get_color_for($group + 1, $period, $array_colors);
-                    // echo " background ". $background." \n";
+            
                     $html .= "\t\t<td style=\"background-color: {$background}\">\n";
-                    // $html .= "\t\t<td >\n";
-                    $html .= "\t\t\t<dl>\n";
-                    // $html .= "\t\t\t\t<dt><h4>{$composition["name"]}</h4></dt>\n";
-                    // $html .= "\t\t\t\t<dd style=\"text-align: center; font-weight: bold; font-size:80%;\">{$composition["number"]}</dd>\n";
-                    // $html .= "\t\t\t\t<dd style=\"text-align: center; font-size:150%; font-weight: bold;\">{$composition["small"]}</dd>\n";
-                    // $html .= "\t\t\t\t<dd style=\"text-align: center; font-size:60%; padding-top: 30px;\">{$composition["molar"]}</dd>\n";
-                    // $html .= "\t\t\t<dd>{$composition["electron"]}</dd>\n";
+                    $html .= "\t\t\t<ul>\n";
                     
-                    $html .= "\t\t\t\t<dt style=\"text-align: left; font-weight: bold; font-size:80%;\">{$composition["number"]}</dt>\n";         
-                    $html .= "\t\t\t\t<dd style=\"text-align: center; font-size:100%; font-weight: bold;padding-top: 15px;\">{$composition["small"]}</dd>\n";
-                    $html .= "\t\t\t\t<dd><h4>{$composition["name"]}</h4></dd>\n";
-                    $html .= "\t\t\t\t<dd style=\"text-align: center; font-size:50%; padding-top: 15px;\">{$composition["molar"]}</dd>\n";
-                    $html .= "\t\t\t</dl>\n";
+                    
+                    $html .= "\t\t\t\t<li style=\"text-align: left; font-weight: bold; font-size:80%;\">{$composition["number"]}</li>\n";         
+                    $html .= "\t\t\t\t<li style=\"text-align: center; font-size:100%; font-weight: bold;padding-top: 15px;\">{$composition["small"]}</li>\n";
+                    $html .= "\t\t\t\t<li><h4>{$composition["name"]}</h4></li>\n";
+                    $html .= "\t\t\t\t<li style=\"text-align: center; font-size:50%; padding-top: 15px;\">{$composition["molar"]}</li>\n";
+                    $html .= "\t\t\t</ul>\n";
                     $html .= "\t\t</td>\n";
-                    // print_r($composition);
+                    
                     if($matches[2] == 17)
                     {
                         $html .= "\t</tr>\n";
@@ -203,3 +200,9 @@ $htmlFile = fopen("mendeleiev.html", "w");
 fwrite($htmlFile, $html);
 fclose($htmlFile);
 
+   
+// preg-match => effectue une recherche dans une chaîne de caractères en utilisant une expression régulière et retourne les correspondances trouvées.
+//analyse le subject pour trouver des correspondances avec le pattern défini. 
+//    Le pattern est une expression régulière qui décrit la structure de la chaîne que vous recherchez. 
+// Les correspondances trouvées sont stockées dans un tableau, où chaque élément correspond à une partie de la chaîne qui correspond au pattern.	
+// preg_match('/^(\w+) = position:(\d+), (.+)$/', $line, $matches);
