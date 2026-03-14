@@ -80,123 +80,117 @@ $array_colors=[
     [
         'group'=> [17],
         'period' => [2,3,4,5,6,7],
-        'color' => 'rgb(168, 70, 214);'
+        'color' => 'rgba(168, 70, 214, 0.88);'
     ],
     [
         'group'=> [18],
         'period' => [1,2,3,4,5,6,7],
-        'color' => 'rgb(60, 10, 83);'
+        'color' => 'rgba(68, 11, 94, 0.85);'
     ],
 ];
 
+function getColor($group, $period, $array_colors) {
+	foreach ($array_colors as $rule) {
+		$groups = (array) $rule['group'];    
+		$periods = (array) $rule['period'];
 
-     $html = "<!DOCTYPE html>\n<html>\n<head>";
-     $html .= "\n<style>\n";
-	 $html .= "table {\n\tpadding-left: 50px; \n}\n";
-     $html .= "td {\n\tborder: 1px solid black;\n\twidth: 80px;\n\theight: 80px; \n}\n";
-	 $html .= "ul {\n\tlist-style: none;\n}\n";
-     $html .= "ul, li, tr, td {\n\tmargin: 0;\n\tpadding: 0;\n}\n";
-     $html .= "h4 {\n\ttext-align: center;\n\tfont-size:50%;\n\tmargin: 0;\n\tpadding-bottom: 10px;\n}\n";
-     $html .= "</style>\n";
-     $html .= "\n\t<title>Tableau de Mendeleiev</title>\n</head>\n<body style=\"padding: auto;\">\n";
-     $html .= "\t<h2 style=\"text-align: center; \">Tableau Périodique des Éléments</h2>\n";
-   
-
-    $handle=file_get_contents("ex06.txt");
-    $number=explode("\n", $handle);
-
-    function get_color_for($group, $period, $array_colors) {
-        foreach ($array_colors as $rule) {
-            $groups = (array) $rule['group'];    
-            $periods = (array) $rule['period'];
-			            
-            if (in_array($group, $groups) && in_array($period, $periods)) {
-				// echo "colors\n";print_r($rule);
-                return $rule['color'];
-            }
-        }
-        return null;
-    }
-    $period_max=8;
-    $group_max=18;
-	$group = 0;
-	$period = 1;
-	
-    $html .= "<table>\n";
-    $previous_elem=-1;
-	foreach($number as $key => $value)
-	{         
-		if(empty($value)){
-			break;
-		}			
-		$line = $value;
-		// echo $line."\n";
-		preg_match('/^(\w+) = position:(\d+), number:(\d+), small: (\w+), molar:(.+), electron:(.+)$/', $line, $matches);
-		// echo "matches\n";print_r($matches);
-		if($matches[2] == 0)
-		{
-			$html .= "\t<tr>\n";
-			// $period +=1;
-			// echo "new <tr>, $period \n";
-		}			
-		
-		for($group = $previous_elem+1; $group < $group_max ; $group++)
-		{
-			// echo "for group: ". $group." \n";
-			if( $group != $matches[2] )
-			{
-				$html .= "\t\t<td style=\"border-style: none;\"></td>\n";
-			}
-			else
-			{
-				$background = get_color_for($group + 1, $period, $array_colors);
-				$electron= str_replace(' ', '<br>', $matches[6]);
-		
-				$html .= "\t\t<td style=\"background-color: {$background}\">\n";
-				$html .= "\t\t\t<div style =\"display: flex; justify-content: space-between;\">\n";
-				$html .= "\t\t\t<div>\n";
-				$html .= "\t\t\t\t<ul style=\"text-align: left;\">\n";		
-				$html .= "\t\t\t\t\t<li style=\"font-size:80%;\">{$matches[3]}</li>\n";         
-				$html .= "\t\t\t\t\t<li style=\"font-size:100%; font-weight: bold; padding-top: 15px;\">{$matches[4]}</li>\n";
-				$html .= "\t\t\t\t\t<li><h4>{$matches[1]}</h4></li>\n";
-				$html .= "\t\t\t\t\t<li style=\"font-size:50%; padding-top: 10px;\">{$matches[5]}</li>\n";
-				$html .= "\t\t\t\t</ul>\n";
-				$html .= "\t\t\t</div>\n";
-				$html .= "\t\t\t<div>\n";				
-				$html .= "\t\t\t\t<ul style=\"text-align: right; font-size:50%; padding-right:5px ;padding-top: 5px;\">\n";	
-				$html .= "\t\t\t\t\t<li>{$electron}</li>\n";
-				$html .= "\t\t\t\t</ul>\n";
-				$html .= "\t\t\t</div>\n";
-				$html .= "\t\t\t</div>\n";
-				$html .= "\t\t\t</td>\n";
-				
-				if($matches[2] == 17)
-				{
-					$html .= "\t</tr>\n";
-				}                   
-				break;
-			}               
-		}
-		if($matches[2] != 17)
-		{
-			$previous_elem=$matches[2];			
-		}
-		else
-		{
-			$previous_elem=-1;
-			$period++;
+		if (in_array($group, $groups) && in_array($period, $periods)) {
+			return $rule['color'];
 		}
 	}
+	return null;
+}
+
+function headerMendeleiev(){
+	$html = "<!DOCTYPE html>\n<html>\n<head>";
+	$html .= "\n<style>\n";
+	$html .= "table {\n\tpadding-left: 50px; \n}\n";
+	$html .= "td {\n\tborder: 1px solid black;\n\twidth: 80px;\n\theight: 80px; \n}\n";
+	$html .= "ul {\n\tlist-style: none;\n}\n";
+	$html .= "ul, li, tr, td {\n\tmargin: 0;\n\tpadding: 0;\n}\n";
+	$html .= "h4 {\n\ttext-align: center;\n\tfont-size:50%;\n\tmargin: 0;\n\tpadding-bottom: 10px;\n}\n";
+	$html .= "</style>\n";
+	$html .= "\n\t<title>Tableau de Mendeleiev</title>\n</head>\n<body style=\"padding: auto;\">\n";
+	$html .= "\t<h2 style=\"text-align: center; \">Tableau Périodique des Éléments</h2>\n";
+	
+	return $html;
+}
+
+function create_tdElement($matches, $html, $background){
+	$electron = str_replace(' ', '<br>', $matches[6]);
+
+	$html .= "\t\t<td style=\"background-color: {$background}\">\n";
+	$html .= "\t\t\t<div style=\"display: flex; justify-content: space-between;\">\n";
+	$html .= "\t\t\t<div>\n";
+	$html .= "\t\t\t\t<ul style=\"text-align: left;\">\n";
+	$html .= "\t\t\t\t\t<li style=\"font-size:80%;\">{$matches[3]}</li>\n";
+	$html .= "\t\t\t\t\t<li style=\"font-size:100%; font-weight: bold; padding-top: 15px;\">{$matches[4]}</li>\n";
+	$html .= "\t\t\t\t\t<li><h4>{$matches[1]}</h4></li>\n";
+	$html .= "\t\t\t\t\t<li style=\"font-size:50%; padding-top: 10px;\">{$matches[5]}</li>\n";
+	$html .= "\t\t\t\t</ul>\n";
+	$html .= "\t\t\t</div>\n";
+	$html .= "\t\t\t<div>\n";
+	$html .= "\t\t\t\t<ul style=\"text-align: right; font-size:50%; padding-right:5px; padding-top: 5px;\">\n";
+	$html .= "\t\t\t\t\t<li>{$electron}</li>\n";
+	$html .= "\t\t\t\t</ul>\n";
+	$html .= "\t\t\t</div>\n";
+	$html .= "\t\t\t</div>\n";
+	$html .= "\t\t</td>\n";
+
+	return $html;
+}
+
+$handle = file_get_contents("ex06.txt");
+$number = explode("\n", $handle);
+
+$groupMax = 17;
+$period = 1;
+$currentGroup = 0;
+$trExist = false;
+
+$html = headerMendeleiev();
+$html .= "<table>\n";
+
+foreach ($number as $value) {
+	$line = trim($value);
+	if ($line === '') {
+		continue;
+	}
+	if (!preg_match('/^(\w+) = position:(\d+), number:(\d+), small: (\w+), molar:(.+), electron:(.+)$/', $line, $matches)) {
+		continue;
+	}
+	$groupIndex = $matches[2];
+
+	if (!$trExist) {
+		$html .= "\t<tr>\n";
+		$trExist = true;
+		$currentGroup = 0;
+	}
+
+	while ($currentGroup < $groupIndex) {
+		$html .= "\t\t<td style=\"border-style: none;\"></td>\n";
+		$currentGroup++;
+	}
+
+	$background = getColor($groupIndex + 1, $period, $array_colors);
+	$html =create_tdElement($matches, $html, $background);
+
+	$currentGroup++;
+	
+
+	if ($groupIndex == $groupMax) {
+		$html .= "\t</tr>\n";
+		$trExist = false;
+		$period++;
+	}
+	
+}
+if ($trExist) {
+	$html .= "\t</tr>\n";
+}
 
 $html .= "</table>\n</body>\n</html>\n";
 
 $htmlFile = fopen("mendeleiev.html", "w");
 fwrite($htmlFile, $html);
 fclose($htmlFile);
-
-   
-// preg-match => effectue une recherche dans une chaîne de caractères en utilisant une expression régulière et retourne les correspondances trouvées.
-//analyse le subject pour trouver des correspondances avec le pattern défini. 
-//    Le pattern est une expression régulière qui décrit la structure de la chaîne que vous recherchez. 
-// Les correspondances trouvées sont stockées dans un tableau, où chaque élément correspond à une partie de la chaîne qui correspond au pattern.	
-// preg_match('/^(\w+) = position:(\d+), (.+)$/', $line, $matches);
