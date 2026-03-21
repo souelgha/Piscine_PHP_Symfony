@@ -24,7 +24,7 @@ class Text
 			}
 			
 		}
-		// print_r($html);
+		print_r($html);		
 		return $html;
 	}
 
