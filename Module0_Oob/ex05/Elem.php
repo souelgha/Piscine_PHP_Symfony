@@ -82,27 +82,23 @@ class Elem {
 	public function validPage(){
 		$nbtitle=0;
 		$nbmeta=0;
-		echo "Valid Page Check:\n";
-		echo "Verification de la balise <html>...\n";
+		echo "Verification conformite de la page:\n";
 		if($this->element != "html"){
 			echo "\033[31mIl manque la balise <html>\033[0m\n";
 			return false;
 		}
 		//print_r($this->content); 
 		if(count($this->content) !=2){
-			echo "\033[31mtrop d element dans le <html>\033[0m\n";
+			echo "\033[31mtrop d elements dans le <html>\033[0m\n";
 			return false;
 		}
 		if($this->content[0]->element != "head" || $this->content[1]->element != "body"){
 			echo "\033[31m<head> ou <body> mal positionne\033[0m\n";
 			return false;
 		}
-		echo "La balise <html> est correct\n";
-
 		foreach($this->content as $elem){
 			if($elem instanceof Elem){
 				if($elem->element=="head"){
-					echo "Verification de la balise <head>...\n";
 					foreach($elem->content as $subelem){
 						if($subelem instanceof Elem){
 							if (($subelem->element=="meta" && $nbmeta < 1)|| ($subelem->element=="title" && $nbtitle < 1)){
@@ -117,11 +113,9 @@ class Elem {
 								return false;						
 							}
 						}
-					}
-					echo "La balise <head> est correct\n";
+					}					
 				}
 				if($elem->element=="body"){
-					echo "Verification de la balise <body>...\n";
 					foreach($elem->content as $subelem){
 						if($subelem instanceof Elem){
 							if(($subelem ->element == "p")){
@@ -155,13 +149,19 @@ class Elem {
 									}
 								}								
 							}
+							if(($subelem->element == "tr") || ($subelem->element == "td") || ($subelem->element == "th")){
+								echo "\033[31mLa balise <tr>, <td> ou <th> doit etre dans une <table>\033[0m\n";
+								return false;
+							}
+							if($subelem->element == "li"){
+								echo "\033[31mLa balise <li> doit etre dans une <ul> ou <ol>\033[0m\n";
+								return false;
+							}
 						}
-					}
-					echo "La balise <body> est correcte\n";					
+					}		
 				}
 			}
 		}
-		
-
+		return true;
 	}
 }
