@@ -17,5 +17,6 @@ class TemplateEngine
         $html .="\t</body>\n</html>";
         file_put_contents($this->fileName, $html);
 	}
-
 }
+
+?>

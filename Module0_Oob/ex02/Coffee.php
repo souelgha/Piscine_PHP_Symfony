@@ -19,6 +19,6 @@ class Coffee extends HotBeverage
 	public function getComment(): string{
 		return($this->comment);
 	}
-
-
 }
+
+?>

@@ -6,4 +6,4 @@ class MyException extends Exception{
 	}
 }
 
-
+?>

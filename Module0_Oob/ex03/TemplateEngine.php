@@ -17,5 +17,6 @@ class TemplateEngine
 		$htmlcontent= $this->element->getHTML();
 		file_put_contents($this->fileName, $htmlcontent);         
 	}
-
 }
+
+?>

@@ -11,10 +11,6 @@ try{
 	$table= new Elem('table');
 	$tr= new Elem('tr');
 	
-	//$bod =  new Elem('bod');
-	
-
-
 	$head->pushElement(new Elem('meta', 'charset="UTF-8"'));
 	$head->pushElement(new Elem('title', 'Mon HTML'));
 	$elem->pushElement($head);
@@ -37,7 +33,6 @@ catch (MyException $e) {
 	echo "Caught exception: " . $e->getMessage() . "\n";
 
 }
-
 
 
 ?>

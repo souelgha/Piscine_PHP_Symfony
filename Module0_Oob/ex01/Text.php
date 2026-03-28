@@ -21,8 +21,7 @@ class Text
 			}
 			else{
 				$html .= "\t\t<p>".htmlspecialchars($line). "</p>\n";
-			}
-			
+			}			
 		}
 		print_r($html);		
 		return $html;
@@ -31,8 +30,6 @@ class Text
 	public function getFirstValue(){
 		return($this->texts[0]);
 	}
-	public function isEmpty() {
-		return empty($this->texts);
-	}
-	
 }
+
+?>

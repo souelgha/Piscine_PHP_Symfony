@@ -13,4 +13,5 @@ $engine->createFile($drink1);
 echo "Fichier 'Tea.html' généré avec succès.";
 $engine->createFile($drink2);
 echo "Fichier 'Coffee.html' généré avec succès.";
- 
+
+?>

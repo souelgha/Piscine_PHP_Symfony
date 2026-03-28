@@ -24,9 +24,8 @@ class TemplateEngine
                 $template = str_replace("{" . $propName . "}", $value, $template);
             }
         }
-		file_put_contents($filename, $template);
-  
-		   
+		file_put_contents($filename, $template);		   
     }
 }
 
+?>

@@ -20,3 +20,5 @@ class Tea extends HotBeverage
 		return($this->comment);
 	}
 }
+
+?>

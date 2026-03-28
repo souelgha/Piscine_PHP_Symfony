@@ -34,7 +34,7 @@ class Elem {
 			return;
 		}
 	}
-// ajout un element au contenu de la balise. on les stocke dans un tableau idem pour les attributs.
+
 	public function pushElement($element){
 		$this->content[]=$element;
 	}
@@ -56,8 +56,7 @@ class Elem {
 		foreach($this->content as $elem){
 			if($elem instanceof Elem){
 				$nbIndentation++;
-				$htmlcontent .= "\n" . $elem->getHTML();
-				// echo $htmlcontent, "\n";				
+				$htmlcontent .= "\n" . $elem->getHTML();		
 				$nbIndentation--;
 			}
 			else{
@@ -77,7 +76,7 @@ class Elem {
 			$closeTag= "\n".$indentation. "</".$this->element.">";
 			return $firstTag. $htmlcontent. $closeTag;
 		}			
-
 	}
-
 }
+
+?>
