@@ -20,26 +20,26 @@ class Elem {
 			return;
 		}
 		$this->element=$element;
-		 echo $this->element, "\n";
 		if($content !== null){
-			$this->pushElement($content);
+			$this->content[]=$content;
 		}
 		return;
-
 	}
 
-	public function pushElement($element){
-		$this->content[]=$element;
+	public function pushElement( Elem $newelement){
+		$this->content[]=$newelement;
 	}
-
-// return le code HTML:pour obtenir les balises imbriquees, on doit faire un appel recursif a getHTML.
 
 	public function getHTML(){		
-			$htmlcontent="";
-			static $nbIndentation=0;		
-			$indentation=str_repeat("\t", $nbIndentation);
-			print_r($this->content);
+		$htmlcontent="";
 		
+		//preparation de l'indentation
+		static $nbIndentation=0;		
+		$indentation=str_repeat("\t", $nbIndentation);
+		print_r($this->content);
+
+		// getHTML:pour obtenir les balises imbriquees, on doit faire un appel recursif a getHTML. 
+		// Sinon on ajoute simplement le content
 		foreach($this->content as $elem){
 			if($elem instanceof Elem){
 				$nbIndentation++;
@@ -50,7 +50,8 @@ class Elem {
 				$htmlcontent .=$elem;				
 			}
 		}
-	
+
+		//formatage du fichier html
 		if(in_array($this->element, self::$oneclose)){
 			return $indentation."<". $this->element." ". $htmlcontent . " />";			
 		}

@@ -13,7 +13,14 @@ class TemplateEngine
 
     public function createFile($fileName)
     {
-        $this->fileName = $fileName;
+        if($fileName){
+			$this->fileName = $fileName;
+		}
+		else
+		{
+			echo "Error: File name is required \n";
+			return;
+		}
 		$htmlcontent= $this->element->getHTML();
 		file_put_contents($this->fileName, $htmlcontent);         
 	}

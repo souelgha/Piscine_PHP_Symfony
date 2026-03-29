@@ -61,7 +61,7 @@ try{
 	}
 
 	// Element non valide	
-	$elem->pushElement(new Elem('bod'));
+	$elem->pushElement(new Elem('undefined'));
 	if($elem->validPage()){
 		$file= new TemplateEngine($elem);
 		$file->createFile('index1.html');

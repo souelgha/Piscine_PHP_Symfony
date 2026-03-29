@@ -18,41 +18,40 @@ class Elem {
 	public function __construct($element, $content = null, $attributes = null){
 		if(!in_array($element, self::$oneclose)
 			&& !in_array($element, self::$twoclose)){
-		// echo $element, "\n";
 			throw new Myexception("Error: Element not allowed \n");
 			return;
 		}
 		else{
 			$this->element=$element;
-			// echo $this->element, "\n";
 			if($content !== null){
-				$this->pushElement($content);
+				$this->content[]=$content;
 			}
 			if($attributes !== null){
-				$this->pushAttribute($attributes);
-			}
-			return;
-		}
-	}
-
-	public function pushElement($element){
-		$this->content[]=$element;
-	}
-	public function pushAttribute($attributes){
-		if(is_array($attributes)){
-			foreach($attributes as $key => $value){
-				$this->attributes[$key]=$value;
+				foreach($attributes as $key => $value){
+					$this->attributes[$key]=$value;
+				}
 			}
 		}
+		return;		
 	}
 
-// return le code HTML:pour obtenir les balises imbriquees, on doit faire un appel recursif a getHTML.
+	public function pushElement(Elem $newelement){
+		$this->content[]=$newelement;
+	}
+	
+
+
 
 	public function getHTML(){		
-			$htmlcontent="";
-			static $nbIndentation=0;		
-			$indentation=str_repeat("\t", $nbIndentation);
-			print_r($this->content);
+		$htmlcontent="";
+
+		//preparation de l'indentation
+		static $nbIndentation=0;		
+		$indentation=str_repeat("\t", $nbIndentation);
+		print_r($this->content);
+
+		// getHTML:our obtenir les balises imbriquees, on doit faire un appel recursif a getHTML. 
+		// Sinon on ajoute uniquement le content
 		foreach($this->content as $elem){
 			if($elem instanceof Elem){
 				$nbIndentation++;
@@ -63,11 +62,13 @@ class Elem {
 				$htmlcontent .=$elem;				
 			}
 		}
+		
+		//formatage du fichier html
 		$stringattributes="";
-		// print_r($this->attributes);
 		foreach ($this->attributes as $key => $value) {
 			$stringattributes.= " " . $key . '="' . $value . '"';
 		}
+
 		if(in_array($this->element, self::$oneclose)){
 			return $indentation."<". $this->element." ". $htmlcontent . " />";			
 		}

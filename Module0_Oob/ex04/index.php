@@ -28,6 +28,7 @@ try{
 	$elem->pushElement($body);
 	$file= new TemplateEngine($elem);
 	$file->createFile('index.html');
+	$elem->pushElement(new Elem('undefined'));
 }
 catch (MyException $e) {
 	echo "Caught exception: " . $e->getMessage() . "\n";
